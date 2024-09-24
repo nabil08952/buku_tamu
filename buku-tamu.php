@@ -11,24 +11,23 @@ include_once('templates/header.php');
 
 <?php
 if (isset($_POST['simpan'])) {
-  if (tambah_tamu($_POST) >0) {
+  if (tambah_tamu($_POST) > 0) {
 ?>
-      <div class="alert alert-success" role="alert">
-        data berhasil di simpan!
-      </div>
-    <?php
-    } else {
-    ?>
-        <div class="alert alert-danger" role="alert">
-          Data gagal disimpan!
-        </div>
-    <?php
-        }
-      }
-      ?> 
+    <div class="alert alert-success" role="alert">
+      Data berhasil disimpan!
+    </div>
+  <?php
+  } else {
+  ?>
+    <div class="alert alert-danger">
+      Data gagal disimpan!
+    </div>
+<?php
+  }
+}
+?>
 
-
-<!-- DataTales Example -->
+<!-- DataTales tambah -->
 <div class="card shadow mb-4">
     <div class="card-header py-3">
         <button type="button" class="btn btn-primary btn-icon-split"
@@ -79,8 +78,8 @@ if (isset($_POST['simpan'])) {
                             <td><?= $tamu['no_hp']?></td>
                             <td><?= $tamu['bertemu']?></td>
                             <td><?= $tamu['kepentingan']?></td>
-                            <td><button class="btn btn-success" href="edit-tamu.php?id=<?= $tamu['id_tamu']?>">Ubah</button>
-                                <button class="btn btn-danger" type="button">Hapus</button></td>
+                            <td><a class="btn btn-success" href="edit-tamu.php?id=<?= $tamu['id_tamu']?>">Ubah</a>
+                                <a onclick="confirm('Apakah anda yakin ingin menghapus data tamu?')" class="btn btn-danger"  href="hapus-tamu.php?id=<?= $tamu['id_tamu']?>">Hapus</a>
                         </tr>
                         <?php endforeach;?>
                 </tbody>
@@ -90,7 +89,7 @@ if (isset($_POST['simpan'])) {
 </div>
 
 <?php
-  $query = mysqli_query($koneksi, "SELECT max(id_tamu) as kodeTerbesar FROM `bukutamu`");
+  $query = mysqli_query($koneksi, "SELECT max(id_tamu) as kodeTerbesar FROM bukutamu");
   $data = mysqli_fetch_array($query);
   $kodeTamu = $data["kodeTerbesar"];
 
@@ -100,6 +99,7 @@ if (isset($_POST['simpan'])) {
 
   $huruf = "zt";
   $kodeTamu = $huruf . sprintf("%03s", $urutan);
+
 ?>
 
 
@@ -108,7 +108,7 @@ if (isset($_POST['simpan'])) {
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="tambahModalLabel">Modal title</h5>
+        <h5 class="modal-title" id="tambahModalLabel">Ubah data tamu</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -125,7 +125,8 @@ if (isset($_POST['simpan'])) {
           <div class="form-group row">
             <label for="alamat" class="col-sm-3 col-form-label">Alamat</label>
             <div class="col-sm-8">
-              <textarea class="form-control" id="alamat" name="alamat"></textare>
+              <textarea class="form-control" id="alamat" name="alamat"></textarea>
+            </div>
           </div>
           <div class="form-group row">
             <label for="no_hp" class="col-sm-3 col-form-label">No. Telepon</label>
